@@ -1,1 +1,1 @@
-use ecommerce_bd;
+select*FROM produtos;
