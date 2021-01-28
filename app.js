@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 
 const rotaProdutos = require('./routes/produtos')
 const rotaPedidos = require('./routes/pedidos')
+const rotaUsiarios = require('./routes/usuarios')
 
 app.use(morgan('dev'))// é uma forma de logar ou mostrar quais requisições estão chegando em nosso servidor HTTP, seja ele feito no Express ou em Node puro utilizando o módulo HTTP
 app.use('/uploads', express.static('uploads'))
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use('/usuarios', rotaUsiarios)
 app.use('/produtos', rotaProdutos)
 app.use('/pedidos', rotaPedidos)
 

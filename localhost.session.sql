@@ -1,1 +1,2 @@
-select * from produtos;
+DESCRIBE usuarios;
+
