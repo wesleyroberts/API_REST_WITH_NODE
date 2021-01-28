@@ -3,6 +3,7 @@
     "MYSQL_PASSWORD":"root",
     "MYSQL_DATABASE":"ecommerce_bd",
     "MYSQL_HOST":"localhost",
-    "MYSQL_PORT":3306
+    "MYSQL_PORT":3306,
+    "JWT_KEY":"id1308191"
  }
 }
