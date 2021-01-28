@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('../mysql').pool
 const multer = require('multer')
+const login = require('../middleware/login')
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
@@ -56,7 +57,7 @@ router.get('/', (req, res, next) => {
   })
 })
 // INSERE UM PRODUTO
-router.post('/', upload.single('imagem'), (req, res, next) => {
+router.post('/', login.obrigatorio, upload.single('imagem'), (req, res, next) => {
   console.log(req.file)
   mysql.getConnection((error, conn) => {
     if (error) { return res.status(500).send({ error: error }) }
@@ -119,12 +120,12 @@ router.get('/:id_produto', (req, res, next) => {
 })
 
 // ALTERA UM PRODUTO
-router.patch('/', (req, res, next) => {
+router.patch('/', login.obrigatorio, (req, res, next) => {
   mysql.getConnection((error, conn) => {
     if (error) { return res.status(500).send({ error: error }) }
     conn.query(
       'UPDATE produtos SET nome = ?, preco = ? WHERE id_produtos = ?',
-      [req.body.nome, req.body.preco, req.body.id_produto],
+      [req.body.nome, req.body.preco, req.body.id_produtos],
       (error, result, field) => {
         conn.release()// nunca deixe de fazer, pois quando entrar no callback tem que liberar essa conecxao
         if (error) { return res.status(500).send({ error: error }) }
@@ -148,7 +149,7 @@ router.patch('/', (req, res, next) => {
 })
 
 // DELETA UM PRODUTO
-router.delete('/', (req, res, next) => {
+router.delete('/', login.obrigatorio, (req, res, next) => {
   mysql.getConnection((error, conn) => {
     if (error) { return res.status(500).send({ error: error }) }
     conn.query(
